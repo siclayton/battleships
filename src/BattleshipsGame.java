@@ -18,7 +18,7 @@ public class BattleshipsGame {
         gridWidth = builder.gridWidth;
 
         //Instantiating the object attributes
-        board = new BoardMatrix();
+        board = new BoardMatrix(numShips, shipSize, gridHeight, gridWidth);
         grid = new BattleshipsGrid();
         frame = new BattleshipsFrame();
     }
