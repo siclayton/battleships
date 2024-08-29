@@ -20,6 +20,27 @@ public class BoardMatrix {
         placeShips();
     }
     private void placeShips() {
+        Random rand = new Random();
 
+        for (int i = 0; i < numShips; i++) {
+            ORIENTATION orientation = rand.nextInt(2) == 0 ? ORIENTATION.VERTICAL : ORIENTATION.HORIZONTAL;
+            int row = rand.nextInt(width);
+            int col = rand.nextInt(height);
+            boolean[] possiblePositions = findPossiblePositions(row, col, orientation);
+        }
+    }
+    private boolean[] findPossiblePositions(int row, int col, ORIENTATION orientation) {
+        boolean[] possiblePositions = new boolean[shipSize * 2 - 1];
+
+        if (orientation == ORIENTATION.VERTICAL) {
+            for (int i = row - (shipSize -1); i < row + shipSize; i++) {
+                possiblePositions[i] = matrix[col][i];
+            }
+        } else {
+            for (int i = col - (shipSize -1); i < col + shipSize; i++) {
+                possiblePositions[i] = matrix[i][row];
+            }
+        }
+        return possiblePositions;
     }
 }
