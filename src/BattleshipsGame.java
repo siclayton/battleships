@@ -11,16 +11,20 @@ public class BattleshipsGame {
     private final BattleshipsFrame frame;
 
     private BattleshipsGame(BattleshipsGameBuilder builder) {
+        if ((double) (builder.numShips * builder.shipSize) / (builder.gridHeight * builder.gridWidth) > 0.25) {
+            throw new IllegalArgumentException("At least 75% of the grid must be water! This ensures the game isn't too easy");
+        }
+
         //Assigning the values of these attributes from the builder
-        numShips = builder.numShips;
-        shipSize = builder.shipSize;
-        gridHeight = builder.gridHeight;
-        gridWidth = builder.gridWidth;
+        this.numShips = builder.numShips;
+        this.shipSize = builder.shipSize;
+        this.gridHeight = builder.gridHeight;
+        this.gridWidth = builder.gridWidth;
 
         //Instantiating the object attributes
-        board = new BoardMatrix(numShips, shipSize, gridHeight, gridWidth);
-        grid = new BattleshipsGrid();
-        frame = new BattleshipsFrame();
+        this.board = new BoardMatrix(numShips, shipSize, gridHeight, gridWidth);
+        this.grid = new BattleshipsGrid();
+        this.frame = new BattleshipsFrame();
     }
 
     //Builder class
