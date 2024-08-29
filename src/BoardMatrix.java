@@ -23,24 +23,46 @@ public class BoardMatrix {
         Random rand = new Random();
 
         for (int i = 0; i < numShips; i++) {
-            ORIENTATION orientation = rand.nextInt(2) == 0 ? ORIENTATION.VERTICAL : ORIENTATION.HORIZONTAL;
-            int row = rand.nextInt(width);
-            int col = rand.nextInt(height);
-            boolean[] possiblePositions = findPossiblePositions(row, col, orientation);
+            int row;
+            int col;
+            boolean[] possiblePositions;
+            //Randomly generate the position and orientation of the ship until a position with enough room around it to place a ship in the given orientation is generated
+            do {
+                ORIENTATION orientation = rand.nextInt(2) == 0 ? ORIENTATION.VERTICAL : ORIENTATION.HORIZONTAL;
+                row = rand.nextInt(height);
+                col = rand.nextInt(width);
+                possiblePositions = findPossiblePositions(row, col, orientation);
+            } while (matrix[row][col] || !hasSpaceForShip(possiblePositions));
         }
     }
     private boolean[] findPossiblePositions(int row, int col, ORIENTATION orientation) {
         boolean[] possiblePositions = new boolean[shipSize * 2 - 1];
 
         if (orientation == ORIENTATION.VERTICAL) {
-            for (int i = row - (shipSize -1); i < row + shipSize; i++) {
-                possiblePositions[i] = matrix[col][i];
+            for (int i = col - (shipSize -1); i < col + shipSize; i++) {
+                possiblePositions[i] = matrix[row][i];
             }
         } else {
-            for (int i = col - (shipSize -1); i < col + shipSize; i++) {
-                possiblePositions[i] = matrix[i][row];
+            for (int i = row - (shipSize -1); i < row + shipSize; i++) {
+                possiblePositions[i] = matrix[i][col];
             }
         }
         return possiblePositions;
+    }
+    private boolean hasSpaceForShip(boolean[] positions) {
+        for (int i = 0; i <= positions.length - shipSize; i++) {
+            boolean consecutiveFalses = true;
+
+            for (int j = 0; j < shipSize; j++) {
+                if (positions[i + j]) { // Check if the current element contains a ship, breaking if it does
+                    consecutiveFalses = false;
+                    break;
+                }
+            }
+            if (consecutiveFalses) {
+                return true; // Return true if there are 'shipSize' spaces to put the ship
+            }
+        }
+        return false;
     }
 }
