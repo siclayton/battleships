@@ -1,9 +1,9 @@
 public class BattleshipsGame {
-    private int numShips; //The number of ships that will be placed on the board
-    private int shipSize; //The size of the ships that will be placed on the board
+    private final int numShips; //The number of ships that will be placed on the board
+    private final int shipSize; //The size of the ships that will be placed on the board
 
-    private int gridHeight; //The height of the grid that the game will be played on
-    private int gridWidth; //The width of the grid that the game will be played on
+    private final int gridHeight; //The height of the grid that the game will be played on
+    private final int gridWidth; //The width of the grid that the game will be played on
 
     //Objects needed to create the game
     private final BoardMatrix board;
