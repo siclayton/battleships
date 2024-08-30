@@ -43,7 +43,12 @@ public class BoardMatrix {
     private boolean[] findPossiblePositions(int row, int col, ORIENTATION orientation) {
         boolean[] possiblePositions = new boolean[shipSize * 2 - 1];
 
+        //The first position where a ship of size shipSize could start, and it WOULD reach position [row][col]
         int currentPosition = (orientation == ORIENTATION.HORIZONTAL ? col : row) - (shipSize - 1);
+        /*
+            The first position where a ship of size shipSize could start, and it WOULDN'T reach position [row][col]
+            If a ship was on this position, it wouldn't be a valid ship for the row,col given
+        */
         int lastPosition = (orientation == ORIENTATION.HORIZONTAL ? col : row) + shipSize;
         int gridSize = (orientation == ORIENTATION.HORIZONTAL ? width : height);
 
@@ -63,7 +68,7 @@ public class BoardMatrix {
             boolean consecutiveFalses = true;
 
             for (int j = 0; j < shipSize; j++) {
-                if (positions[i + j]) { // Check if the current element contains a ship, breaking if it does
+                if (positions[i + j]) { // Check if the current element contains a ship, break if it does
                     consecutiveFalses = false;
                     break;
                 }
@@ -75,19 +80,29 @@ public class BoardMatrix {
         return false;
     }
     private void placeShip(int row, int col, ORIENTATION orientation, boolean[] positions) {
-        int shipSpaceOffset = findSpaceForShip(positions);
+        int shipSpaceOffset = findSpaceForShip(positions); //The offset (from the start of the positions array) where the space for the ship starts
 
         if (shipSpaceOffset == -1) {
             return;
         }
 
         if (orientation == ORIENTATION.HORIZONTAL) {
+            /*
+                This works out the position where ths space for the ship starts in the matrix
+                (col - (shipSize - 1)) is the position of the start of the positions array
+                Then the offset is added to get to the position where the space starts
+             */
             col = (col - (shipSize - 1)) + shipSpaceOffset;
 
             for (int i = 0; i < shipSize; i++, col++) {
                 matrix[row][col] = true;
             }
         } else {
+            /*
+                This works out the position where ths space for the ship starts in the matrix
+                (row - (shipSize - 1)) is the position of the start of the positions array
+                Then the offset is added to get to the position where the space starts
+             */
             row = (row - (shipSize - 1)) + shipSpaceOffset;
 
             for (int i = 0; i < shipSize; i++, row++) {
