@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.Random;
 
 public class BoardMatrix {
@@ -20,7 +19,7 @@ public class BoardMatrix {
 
         placeShips();
 
-//        System.out.println(Arrays.deepToString(matrix));
+        System.out.println(this);
     }
     private void placeShips() {
         Random rand = new Random();
@@ -111,5 +110,24 @@ public class BoardMatrix {
             }
         }
         return null;
+    }
+    @Override
+    public String toString() {
+        StringBuilder output = new StringBuilder();
+        boolean first = true;
+        for (boolean[] array : matrix) {
+            if (first)
+                first = false;
+            else
+                output.append("\n");
+
+            for (boolean value : array) {
+                if (value)
+                    output.append("X");
+                else
+                    output.append("O");
+            }
+        }
+        return output.toString();
     }
 }
