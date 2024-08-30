@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Random;
 
 public class BoardMatrix {
@@ -18,6 +19,8 @@ public class BoardMatrix {
         matrix = new boolean[height][width];
 
         placeShips();
+
+//        System.out.println(Arrays.deepToString(matrix));
     }
     private void placeShips() {
         Random rand = new Random();
@@ -42,18 +45,20 @@ public class BoardMatrix {
         boolean[] possiblePositions = new boolean[shipSize * 2 - 1];
 
         if (orientation == ORIENTATION.HORIZONTAL) {
-            for (int i = col - (shipSize -1); i < col + shipSize; i++) {
-                if (col < 0 || col >= width) {
+            for (int i = 0, currentCol = col - (shipSize -1); currentCol < col + shipSize; i++, currentCol++) {
+                if (currentCol < 0 || currentCol >= width) {
                     possiblePositions[i] = true;
+                } else {
+                    possiblePositions[i] = matrix[row][currentCol];
                 }
-                possiblePositions[i] = matrix[row][i];
             }
         } else {
-            for (int i = row - (shipSize -1); i < row + shipSize; i++) {
-                if (row < 0 || row >= height) {
+            for (int i = 0, currentRow = row - (shipSize - 1); currentRow < row + shipSize; i++, currentRow++) {
+                if (currentRow < 0 || currentRow >= height) {
                     possiblePositions[i] = true;
+                } else {
+                    possiblePositions[i] = matrix[currentRow][col];
                 }
-                possiblePositions[i] = matrix[i][col];
             }
         }
         return possiblePositions;
