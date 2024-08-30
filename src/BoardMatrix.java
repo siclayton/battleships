@@ -80,7 +80,7 @@ public class BoardMatrix {
         return false;
     }
     private void placeShip(int row, int col, ORIENTATION orientation, boolean[] positions) {
-        int shipSpaceOffset = findSpaceForShip(positions); //The offset (from the start of the positions array) where the space for the ship starts
+        int shipSpaceOffset = findSpaceForShip(positions); //The offset (from the start of the 'positions' array), where the space for the ship starts
 
         if (shipSpaceOffset == -1) {
             return;
@@ -88,8 +88,8 @@ public class BoardMatrix {
 
         if (orientation == ORIENTATION.HORIZONTAL) {
             /*
-                This works out the position where ths space for the ship starts in the matrix
-                (col - (shipSize - 1)) is the position of the start of the positions array
+                This works out the position where the space for the ship starts in the matrix
+                (col - (shipSize - 1)) is the position of the start of the 'positions' array
                 Then the offset is added to get to the position where the space starts
              */
             col = (col - (shipSize - 1)) + shipSpaceOffset;
@@ -99,8 +99,8 @@ public class BoardMatrix {
             }
         } else {
             /*
-                This works out the position where ths space for the ship starts in the matrix
-                (row - (shipSize - 1)) is the position of the start of the positions array
+                This works out the position where the space for the ship starts in the matrix
+                (row - (shipSize - 1)) is the position of the start of the 'positions' array
                 Then the offset is added to get to the position where the space starts
              */
             row = (row - (shipSize - 1)) + shipSpaceOffset;
@@ -125,6 +125,9 @@ public class BoardMatrix {
             }
         }
         return -1;
+    }
+    public boolean[][] getMatrix() {
+        return matrix;
     }
     @Override
     public String toString() {
