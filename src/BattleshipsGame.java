@@ -7,8 +7,8 @@ public class BattleshipsGame {
 
     //Objects needed to create the game
     private final BoardMatrix board;
-    private final BattleshipsGrid grid;
-    private final BattleshipsFrame frame;
+//    private final BattleshipsGrid grid;
+//    private final BattleshipsFrame frame;
 
     private BattleshipsGame(BattleshipsGameBuilder builder) {
         if ((double) (builder.numShips * builder.shipSize) / (builder.gridHeight * builder.gridWidth) > 0.25) {
@@ -23,8 +23,8 @@ public class BattleshipsGame {
 
         //Instantiating the object attributes
         this.board = new BoardMatrix(numShips, shipSize, gridHeight, gridWidth);
-        this.grid = new BattleshipsGrid();
-        this.frame = new BattleshipsFrame();
+//        this.grid = new BattleshipsGrid();
+//        this.frame = new BattleshipsFrame();
     }
 
     //Builder class
@@ -44,19 +44,19 @@ public class BattleshipsGame {
             gridHeight = 7;
             gridWidth = 7;
         }
-        public BattleshipsGameBuilder setNumShips(int numShips) {
+        public BattleshipsGameBuilder NumShips(int numShips) {
             this.numShips = numShips;
             return this;
         }
-        public BattleshipsGameBuilder setShipSize(int shipSize) {
+        public BattleshipsGameBuilder ShipSize(int shipSize) {
             this.shipSize = shipSize;
             return this;
         }
-        public BattleshipsGameBuilder setGridHeight(int gridHeight) {
+        public BattleshipsGameBuilder GridHeight(int gridHeight) {
             this.gridHeight = gridHeight;
             return this;
         }
-        public BattleshipsGameBuilder setGridWidth(int gridWidth) {
+        public BattleshipsGameBuilder GridWidth(int gridWidth) {
             this.gridWidth = gridWidth;
             return this;
         }
