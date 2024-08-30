@@ -75,27 +75,27 @@ public class BoardMatrix {
         return false;
     }
     private void placeShip(int row, int col, ORIENTATION orientation, boolean[] positions) {
-        int[] shipSpaceIndexes = findSpaceForShip(positions);
+        int shipSpaceOffset = findSpaceForShip(positions);
 
-        if (shipSpaceIndexes == null) {
+        if (shipSpaceOffset == -1) {
             return;
         }
 
         if (orientation == ORIENTATION.HORIZONTAL) {
-            col = (col - (shipSize - 1)) + shipSpaceIndexes[0];
+            col = (col - (shipSize - 1)) + shipSpaceOffset;
 
             for (int i = 0; i < shipSize; i++, col++) {
                 matrix[row][col] = true;
             }
         } else {
-            row = (row - (shipSize - 1)) + shipSpaceIndexes[0];
+            row = (row - (shipSize - 1)) + shipSpaceOffset;
 
             for (int i = 0; i < shipSize; i++, row++) {
                 matrix[row][col] = true;
             }
         }
     }
-    private int[] findSpaceForShip (boolean[] positions) {
+    private int findSpaceForShip (boolean[] positions) {
         for (int i = 0; i <= positions.length - shipSize; i++) {
             boolean consecutiveFalses = true;
 
@@ -106,13 +106,19 @@ public class BoardMatrix {
                 }
             }
             if (consecutiveFalses) {
-                return new int[] {i, i + shipSize - 1}; // Return true if there are 'shipSize' spaces to put the ship
+                return i; // Return true if there are 'shipSize' spaces to put the ship
             }
         }
-        return null;
+        return -1;
     }
     @Override
     public String toString() {
+        /*
+            Print the matrix in a more easily readable format
+            X's represent positions that contain a ship
+            O's represent positions that contain water
+        */
+
         StringBuilder output = new StringBuilder();
         boolean first = true;
         for (boolean[] array : matrix) {
