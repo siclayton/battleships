@@ -4,11 +4,11 @@ import java.util.Random;
 public class BoardMatrix {
     private final boolean[][] matrix; //A boolean array representing the position of ships on the board. True represents a ship, false represents water
 
-    int numShips; //The number of ships that will be placed on the board
-    int shipSize; //The size of the ships that will be placed on the board
+    private final int numShips; //The number of ships that will be placed on the board
+    private final int shipSize; //The size of the ships that will be placed on the board
 
-    int height; //The height of the grid that the game will be played on
-    int width; //The width of the grid that the game will be played on
+    private final int height; //The height of the grid that the game will be played on
+    private final int width; //The width of the grid that the game will be played on
 
     public BoardMatrix(int numShips, int shipSize, int height, int width) {
         this.numShips = numShips;
@@ -44,26 +44,22 @@ public class BoardMatrix {
     private boolean[] findPossiblePositions(int row, int col, ORIENTATION orientation) {
         boolean[] possiblePositions = new boolean[shipSize * 2 - 1];
 
-        if (orientation == ORIENTATION.HORIZONTAL) {
-            for (int i = 0, currentCol = col - (shipSize -1); currentCol < col + shipSize; i++, currentCol++) {
-                if (currentCol < 0 || currentCol >= width) {
-                    possiblePositions[i] = true;
-                } else {
-                    possiblePositions[i] = matrix[row][currentCol];
-                }
-            }
-        } else {
-            for (int i = 0, currentRow = row - (shipSize - 1); currentRow < row + shipSize; i++, currentRow++) {
-                if (currentRow < 0 || currentRow >= height) {
-                    possiblePositions[i] = true;
-                } else {
-                    possiblePositions[i] = matrix[currentRow][col];
-                }
+        int currentPosition = (orientation == ORIENTATION.HORIZONTAL ? col : row) - (shipSize - 1);
+        int lastPosition = (orientation == ORIENTATION.HORIZONTAL ? col : row) + shipSize;
+        int gridSize = (orientation == ORIENTATION.HORIZONTAL ? width : height);
+
+        for (int i = 0; currentPosition < lastPosition; i++, currentPosition++) {
+            if (currentPosition < 0 || currentPosition >= gridSize) {
+                possiblePositions[i] = true;
+            } else {
+                int currentRow = orientation == ORIENTATION.HORIZONTAL ? row : currentPosition;
+                int currentCol = orientation == ORIENTATION.HORIZONTAL ? currentPosition : col;
+                possiblePositions[i] = matrix[currentRow][currentCol];
             }
         }
         return possiblePositions;
     }
-    private boolean hasSpaceForShip(boolean[] positions) {
+    public boolean hasSpaceForShip(boolean[] positions) {
         for (int i = 0; i <= positions.length - shipSize; i++) {
             boolean consecutiveFalses = true;
 
