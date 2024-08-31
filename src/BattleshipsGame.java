@@ -7,7 +7,7 @@ public class BattleshipsGame {
 
     //Objects needed to create the game
     private final BoardMatrix board;
-//    private final BattleshipsGrid grid;
+    private final BattleshipsGrid grid;
 //    private final BattleshipsFrame frame;
 
     private BattleshipsGame(BattleshipsGameBuilder builder) {
@@ -23,7 +23,7 @@ public class BattleshipsGame {
 
         //Instantiating the object attributes
         this.board = new BoardMatrix(numShips, shipSize, gridHeight, gridWidth);
-//        this.grid = new BattleshipsGrid();
+        this.grid = new BattleshipsGrid(board, gridHeight, gridWidth);
 //        this.frame = new BattleshipsFrame();
     }
 
