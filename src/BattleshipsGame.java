@@ -1,14 +1,4 @@
 public class BattleshipsGame {
-    private final int numShips; //The number of ships that will be placed on the board
-    private final int shipSize; //The size of the ships that will be placed on the board
-
-    private final int gridHeight; //The height of the grid that the game will be played on
-    private final int gridWidth; //The width of the grid that the game will be played on
-
-    //Objects needed to create the game
-    private final BoardMatrix board;
-    private final BattleshipsGrid grid;
-//    private final BattleshipsFrame frame;
 
     private BattleshipsGame(BattleshipsGameBuilder builder) {
         if ((double) (builder.numShips * builder.shipSize) / (builder.gridHeight * builder.gridWidth) > 0.25) {
@@ -16,15 +6,20 @@ public class BattleshipsGame {
         }
 
         //Assigning the values of these attributes from the builder
-        this.numShips = builder.numShips;
-        this.shipSize = builder.shipSize;
-        this.gridHeight = builder.gridHeight;
-        this.gridWidth = builder.gridWidth;
+        //The number of ships that will be placed on the board
+        int numShips = builder.numShips;
+        //The size of the ships that will be placed on the board
+        int shipSize = builder.shipSize;
+        //The height of the grid that the game will be played on
+        int gridHeight = builder.gridHeight;
+        //The width of the grid that the game will be played on
+        int gridWidth = builder.gridWidth;
 
         //Instantiating the object attributes
-        this.board = new BoardMatrix(numShips, shipSize, gridHeight, gridWidth);
-        this.grid = new BattleshipsGrid(board, gridHeight, gridWidth);
-//        this.frame = new BattleshipsFrame();
+        //Objects needed to create the game
+        BoardMatrix board = new BoardMatrix(numShips, shipSize, gridHeight, gridWidth);
+        BattleshipsGrid grid = new BattleshipsGrid(board, gridHeight, gridWidth);
+        new BattleshipsFrame(grid, gridHeight, gridWidth);
     }
 
     //Builder class

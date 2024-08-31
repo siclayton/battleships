@@ -1,7 +1,7 @@
 import javax.swing.*;
 
 public class BattleshipTile extends JButton {
-    boolean isSunk;
+    private final boolean isSunk;
 
     public BattleshipTile() {
         isSunk = false;
